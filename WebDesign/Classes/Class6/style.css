@@ -1,0 +1,35 @@
+body{
+  background-color: #333;
+  color: white;
+}
+
+.main-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 200px 200px;
+  grid-template-areas: 
+  "header header header"
+  "content sidebar content2"
+  ;
+  grid-gap: 10px;
+  border: 2px solid coral;
+}
+
+.header{
+  grid-area: header;
+}
+
+.content{
+  grid-area: content;
+}
+
+.content2{
+  grid-area: content2;
+}
+.sidebar{
+  grid-area: sidebar;
+}
+
+.main-container div{
+  border: 2px solid white;
+}

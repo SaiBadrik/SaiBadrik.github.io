@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semantic tags</title>
+  <style>
+    *{
+      padding: 10px;
+    }
+    nav ul{
+      display: flex;
+      flex-direction: row;
+      list-style-type: none;
+      justify-content: space-between;
+    }
+
+    a{
+      color: black;
+      text-decoration: none;
+    }
+    h1{
+      display: inline;
+      width: fit-content;
+    }
+    header{
+      display: inline;
+    }
+
+    nav{
+      border: 2px solid rgb(121, 99, 26);
+      background-color: #229799;
+    }
+
+    body{
+      background: #424242;
+    }
+    ul{
+      border: 2px solid saddlebrown;
+      background-color: #F5F5F5;
+    }
+    article{
+      border: 2px solid #F5F5F5;
+      color: #F5F5F5;
+      width: 300px;
+      background-color: #229799;
+      border-radius: 10px;
+      text-align: center;
+      transition: all 1s ease-in-out;
+    }
+    article h2{
+      color: #424242;
+    }
+    article:hover{
+      transform: rotate(20deg);
+      scale: 1.2;
+      background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcK3oFFNgcvYOCcGLOeB7JCquJgoHoa4JDtw&s);
+      background-position: center;
+    }
+    #article-container{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      row-gap: 20px;
+    }
+    .features{
+      height: 40px;
+    }
+    .features img{
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <!-- nav = Navigation in header -->
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#home">Services</a></li>
+        <li><a href="#home">About us</a></li>
+        <li><a href="#home">Contact us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div id="article-container">
+    <article>
+      <h2>Understanding Semantic Tags</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse a facere eius repudiandae totam recusandae adipisci expedita iure. Consequatur laboriosam libero laudantium perferendis repellat velit enim vero nulla doloremque, id fuga et dicta maxime, tempora eos fugiat vitae beatae labore laborum magni dolorem quae recusandae.
+      </p>
+      <div class="features">
+        <img src="https://cdn-icons-png.flaticon.com/512/535/535190.png"
+        alt="This pic cant be loaded">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqjpTy9Bh_FFynX0ax4ohznLIdLicnUGzPnA&s"
+        alt="This pic cant be loaded">
+        <img src="https://static-00.iconduck.com/assets.00/share-icon-2048x1911-60w04qpe.png"
+        alt="This pic cant be loaded">
+
+      </div>
+    </article>
+
+    <article>
+      <h2>Understanding Semantic Tags</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse a facere eius repudiandae totam recusandae adipisci expedita iure. Consequatur laboriosam libero laudantium perferendis repellat velit enim vero nulla doloremque, id fuga et dicta maxime, tempora eos fugiat vitae beatae labore laborum magni dolorem quae recusandae.
+      </p>
+    </article>
+
+    <article>
+      <h2>Understanding Semantic Tags</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse a facere eius repudiandae totam recusandae adipisci expedita iure. Consequatur laboriosam libero laudantium perferendis repellat velit enim vero nulla doloremque, id fuga et dicta maxime, tempora eos fugiat vitae beatae labore laborum magni dolorem quae recusandae.
+      </p>
+    </article>
+
+    <article>
+      <h2>Understanding Semantic Tags</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse a facere eius repudiandae totam recusandae adipisci expedita iure. Consequatur laboriosam libero laudantium perferendis repellat velit enim vero nulla doloremque, id fuga et dicta maxime, tempora eos fugiat vitae beatae labore laborum magni dolorem quae recusandae.
+      </p>
+    </article>
+
+    <article>
+      <h2>Understanding Semantic Tags</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse a facere eius repudiandae totam recusandae adipisci expedita iure. Consequatur laboriosam libero laudantium perferendis repellat velit enim vero nulla doloremque, id fuga et dicta maxime, tempora eos fugiat vitae beatae labore laborum magni dolorem quae recusandae.
+      </p>
+    </article>
+  </div>
+</body>
+</html>

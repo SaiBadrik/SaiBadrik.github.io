@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forms in HTML</title>
+  <style>
+
+    body{
+      background-color: #222;
+      color:azure;
+    }
+
+    h1{
+      color: bisque;
+    }
+
+    #form-container {
+      background-color:#222;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      border: 2px solid cyan;
+      width: fit-content;
+      margin:auto;
+      padding: 30px;
+      margin-top: 20px;
+      border-radius: 50px;
+      transition: all 0.5s ease;
+      box-shadow:0 0 10px #222;
+    }
+
+    #form-container:hover{
+      background-color:blue;
+      box-shadow: 0 0 10px rgb(79, 153, 222);
+    }
+
+    form{
+      margin: auto;
+      display:flex;
+      padding:10px;
+      flex-direction:column;
+      max-width: 300px;
+      gap: 2px;
+      font-size: larger;
+      font-family: sans-serif;
+      font-style:italic;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #sub{
+      padding:10px;
+      background-color:#111;
+      color:white;
+      border-radius: 10px;
+      transition: all 0.5s;
+      width: 100px;
+    }
+
+    #sub:hover{
+      background-color: white;
+      color: #111;
+    }
+  </style>
+</head>
+<body>
+  <form action="#" style="display:none">
+    <!-- This will contain all input tags -->
+    <label for="name">Please enter your name below!</label>
+    <br>
+    <input type="text" name="name" placeholder="Enter your name!">
+    <hr>
+    <label for="pass">Please enter your password below!</label>
+    <br>
+    <input type="password" name="pass" placeholder="Enter your password!">
+    <hr>
+    <label for="mail">Please enter your email</label>
+    <br>
+    <input type="email" name="" placeholder="Enter your email!">
+    <hr>
+    <h2>Select one of the choices</h2>
+    <label for="mcq">What is today's date</label>
+    <input type="radio" name="mcq">7th
+    <input type="radio" name="mcq">8th
+    <input type="radio" name="mcq">9th
+    <input type="radio" name="mcq">10th
+    <hr>
+    <label for="notify">Do you want notifications</label>
+    <input type="checkbox" value="yes" name="notify">
+    <hr>
+    <label for="birth">Select date of birth</label>
+    <input type="date" name="hbd">
+    <hr>
+    <label for="file">Upload any file</label>
+    <input type="file" name="file">
+    <hr>
+    <input type="reset">
+    <input type="submit">
+  </form>
+
+  <div id="form-container">
+    <h1>Login Portal</h1>
+    <form id="myform" action="#" onsubmit="submitForm()">
+      <label for="usn">Your username: </label>
+      <input type="text" name="usn" placeholder="Enter Username Here!">
+      <br>
+      <label for="pass">Your password: </label>
+      <input type="password" name="pass" placeholder="Enter Password Here!">
+      <br>
+      <label for="ph">Your phone number: </label>
+      <input type="number" name="ph" placeholder="Enter Phone Number Here!">
+      <br>
+      <label for="birth">Your birthday: </label>
+      <input type="date" name="birth" placeholder="Enter Date of Birth Here!">
+      <br>
+      <input type="submit" id="sub">
+    </form>
+  </div>
+  <hr>
+  <div id="reveal" style="display:none;">
+    Hi, <span id="user"></span>. Your date of birth is <span id="age"></span>.
+    Can I call you at <span id="phone"></span>?
+    I know what your password is, which is <span id="pass"></span>.
+  </div>
+  <script>
+    function submitForm(){
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const formDetails = {};
+      formData.forEach((value, key)=>{
+        formDetails[key] = value;
+      });
+      document.getElementById('user').innerText = formDetails["usn"];
+      document.getElementById('pass').innerText = formDetails["pass"];
+      document.getElementById('phone').innerText = formDetails["ph"];
+      document.getElementById('age').innerText = formDetails["birth"];
+      document.getElementById('reveal').style.display = "block";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multimedia</title>
+  </head>
+  <body>
+    <h1>Multimedia in HTML</h1>
+
+    <video id="vid" controls width="500">
+      <source src="Media/demo.mp4" type="video/mp4" />
+      Your browser is unsupported
+    </video>
+
+    <audio id="notify" controls style="display: none">
+      <source src="Media/demo.mp3" type="audio/mp3" />
+      Your browser is not supportive for audio
+    </audio>
+
+    <hr />
+    <iframe
+      width="500"
+      src="https://youtube.com/embed/1Mvr3qlliFM"
+      frameborder="0"
+      title="Playing youtube inside the browser"
+      allowfullscreen
+    >
+    </iframe>
+    <iframe
+      width="500"
+      src="https://www.wikipedia.org"
+      frameborder="0"
+      title="Accessing the web"
+    >
+      <!-- ***** [website] **** -->
+      <!-- *****|if human ->[gogle.com] x -->
+    </iframe>
+
+    <br /><br />
+    <button onclick="onSub()">Click me start</button>
+    <button onclick="stop()">Click me to stop</button>
+    <script>
+      const aud = document.querySelector("#notify");
+      const vid = document.querySelector("#vid");
+
+      function onSub() {
+        aud.play();
+        vid.play();
+      }
+      function stop() {
+        aud.pause();
+        vid.pause();
+      }
+    </script>
+  </body>
+</html>
