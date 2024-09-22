@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animations</title>
+  <style>
+    body{
+      background-color: #333;
+    }
+    .box{
+      width: 180px;
+      border: 2px solid white;
+      height: 100px;
+      background-color: orangered;
+      padding: 10px;
+      animation: slide 5s ease infinite;
+      transition: all 2s ease;
+    }
+    @keyframes slide{
+      0%{
+        opacity: 0;
+        transform: translateX(-100px);
+        background-color: rgb(0, 123, 255);
+      }
+      50%{
+        opacity: 1;
+        transform: translateX(50px);
+        background-color: orangered;
+      }
+      100%{
+        opacity: 0;
+        transform: translateX(100px);
+        background-color: rgb(0, 123, 255);
+      }
+    }
+
+    .box:hover{
+      scale: 1.5;
+    }
+
+    .box2{
+      color: aliceblue;
+      background-color: rgb(61, 145, 255);
+      border: 2px solid white;
+      padding: 10px;
+      height: 100px;
+      width: fit-content;
+      animation: move 5s ease infinite;
+      transition: all 2s ease-in;
+    }
+
+    @keyframes move{
+      0%{
+        transform: translateX(-100px);
+        transform: translateY(0px);
+      }
+      25%{
+        transform: translateX(400px);
+        background-color: rgb(182, 182, 44);
+        margin-left: 400px;
+      }
+      50%{
+        margin-left: 800px;
+        transform: translateY(300px);
+        background-color: peru;
+      }
+      75%{
+        margin-left: 0px;
+        transform: translateY(300px);
+        background-color: blueviolet;
+      }
+      100%{
+        transform: translateX(-100px);
+        transform: translateY(0px);
+      }
+    }
+
+    .box2:hover{
+      animation-play-state: paused;
+      scale: 1.2;
+      rotate: 10deg;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    This is a container
+  </div>
+  <br><br>
+  <div class="box2">
+    This is the second container
+  </div>
+</body>
+</html>
