@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Design</title>
+
+<style>
+
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  .box{
+    border: 2px solid black;
+    color: white;
+    padding: 1em;
+    width: 50vw;
+    margin: auto;
+    border-radius: 1em;
+    font-size: 1.5em;
+  }
+  /* desktop */
+  @media (min-width: 768px) {
+      .box{
+        background-color: red;
+        font-size: 1.5em;
+  }
+}
+  /* tablets */
+  @media (min-width: 480px) and (max-width: 768px) {
+    .box{
+        background-color: green;
+        font-size: 1.3em;
+  }
+  }
+ /* phones */
+  @media (max-width: 480px) {
+    .box{
+      background-color: darkblue;
+      font-size: 1em;
+    }
+  }
+
+  .box2{
+  }
+
+  ul{
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    flex-direction: row;
+    margin-bottom: 2.5em;
+    color: #db2323;
+  }
+
+  li{
+    background-color: white;
+    border: 2px solid black;
+    padding: 0.5em;
+    border-radius: 1em;
+    transition: all 1s;
+  }
+
+  li:hover{
+    background-color: rgb(229, 20, 20);
+    color: white;
+    border: 2px solid black;
+  }
+</style>
+</head>
+<body>
+  <h1><u>Responsive Design</u></h1>
+
+  <div class="box2">
+    <ul>
+      <li>Home</li>
+      <li>About</li>
+      <li>Gallery</li>
+      <li>Contact</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam, harum!</p>
+    <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam rem assumenda voluptas pariatur odit distinctio maxime?</span> 
+    <img src=""
+    alt="This image can't me loaded">
+  </div>
+
+
+</body>
+</html>
