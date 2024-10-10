@@ -3,33 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo List</title>
+  <title>To-Do List</title>
+  <style>
+    .done {
+      text-decoration: line-through;
+    }
+  </style>
 </head>
 <body>
-  <h1>My Todo List!</h1>
-  <input type="text" id="newItem" placeholder="Enter the task">
-  <button id="addBtn">Add item</button>
+  <h1>To-Do List</h1>
+  <input type="text" id="newItem" placeholder="Enter new item">
+  <button id="addItemButton">Add Item</button>
 
-  <ul id="todolist"></ul>
+  <ul id="toDoList"></ul>
 
   <script>
-    let addItemBtn = document.querySelector("#addBtn");
-    let todolist = document.querySelector("#todolist");
+var addItemButton = document.getElementById("addItemButton");
+var toDoList = document.getElementById("toDoList");
 
-    addItemBtn.addEventListener('click', function () {
-      let newItemText = document.getElementById("newItem").value;
-      if(newItemText){
-        let newItem = document.createElement("li");
-        newItem.textContent = newItemText;
+addItemButton.addEventListener("click", function() {
+  var newItemText = document.getElementById("newItem").value;
 
-        newItem.addEventListener('click', function () {
-          newItem.classList.toggle("done");
-        });
+  if (newItemText) {
+    // Create a new list item
+    var newItem = document.createElement("li");
+    newItem.textContent = newItemText;
 
-        todolist.appendChild(newItem);
-        document.getElementById("newItem").value = "";
-     }
+    // Add click event to mark as done
+    newItem.addEventListener("click", function() {
+      newItem.classList.toggle("done");
     });
-  </script>
+
+    // Append the new item to the to-do list
+    toDoList.appendChild(newItem);
+
+    // Clear the input field
+    document.getElementById("newItem").value = "";
+  }
+});
+
+
+</script>
 </body>
 </html>
