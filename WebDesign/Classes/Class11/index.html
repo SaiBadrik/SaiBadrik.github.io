@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction of Javascript</title>
+</head>
+<body>
+  <!-- DOM - Document Object Model -->
+  <!-- It is a programming interface for web documents -->
+  <!-- Represents structure of element, as a tree of objects
+   where each objecy corresponds to a part of the document -->
+
+  <div id="myid">Hi There!</div>
+
+  <div class="myclass active">This is a class example!</div>
+  <script>
+
+    let element = document.getElementById("myid");
+    let cl = document.getElementsByClassName("myclass");
+
+    // Accessing the DOM elements by its tag
+    let div = document.getElementsByTagName('div');
+
+    // To access ID, Class, and Tag
+    var collection = document.querySelector("#myid");
+    var collectionGroup = document.querySelectorAll(".myclass");
+
+    document.getElementById("myid").innerHTML = "Changed!";
+    document.getElementById("myid").style.backgroundColor = "blue";
+    document.getElementById("myid").style.color = "white";
+
+    // Adding and removing classes in classlist
+    document.getElementById("myid").classList.add("myclass")
+    document.getElementById("myid").classList.remove("myclass")
+
+    // event listeners
+    element.addEventListener("click", function () {
+      alert("Hi! What is your name??");
+    })
+
+    let newElem = document.createElement("button");
+    newElem.innerHTML = "This button was created using JavaScript"
+    newElem.style.background = "black";
+    newElem.style.color = "white";
+    newElem.classList.add("jsButton");
+    document.body.appendChild(newElem);
+
+    let identify = document.querySelector(".jsButton");
+    identify.remove();
+  </script>
+</body>
+</html>
