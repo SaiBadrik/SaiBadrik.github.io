@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  .container{
+    text-align: center;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f2f2f2;
+  }
+
+  #nameInput{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  #storeButton, #clearButton{
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #welcomeMessage{
+    font-weight: bold;
+    margin-top: 20px;
+  }
+</style>
+<body>
+  <div class="container">
+    <h1>Learning Session Storage</h1>
+    <p>Enter your name:</p>
+    <input type="text" id="nameInput" placeholder="Your Name:....">
+    <button id="storeButton">Store Name</button>
+    <button id="clearButton">Clear Names</button>
+    <p id="welcomeMessage"></p>
+    <ul id="nameList"></ul>
+  </div>
+</body>
+<script>
+  const nameInput = document.getElementById("nameInput");
+  const storeButton = document.getElementById("storeButton");
+  const clearButton = document.getElementById("clearButton");
+  const welcomeMessage = document.getElementById("welcomeMessage");
+  const namesList = document.getElementById("nameList");
+
+  let names = JSON.parse(sessionStorage.getItem('names')) || [];
+
+  storeButton.addEventListener("click", function(){
+    const name = nameInput.value;
+    names.push(name);
+    sessionStorage.setItem('names', JSON.stringify(names));
+    displayNames();
+  })
+
+  clearButton.addEventListener("click", function(){
+    sessionStorage.clear();
+    names = [];
+    displayNames();
+  })
+
+  function displayNames() {
+      namesList.innerHTML = "";
+      names.forEach((name) => {
+        const li = document.createElement("li");
+        li.textContent = name;
+        namesList.appendChild(li);
+      });
+      welcomeMessage.textContent =
+        names.length > 0 ? `Welcome back, ${names.join(", ")}!` : "Welcome!";
+    }
+</script>
+</html>

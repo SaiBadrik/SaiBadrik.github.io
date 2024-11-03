@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #printName, #printAge{
+      display: none;
+      opacity: 0;
+      transition: all 1s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <div id="clickCounter">Number of clicks: 0</div>
+  <button id="clickButton">
+    Click Here to Update Count!
+  </button>
+  <button onclick="resetCount()">RESET COUNTER</button>
+  <br><br><br><br>
+  <hr>
+  <div class="printDetails">
+    <h2 id="printName"></h2>
+    <h3 id="printAge"></h3>
+  </div>
+  <div class="inpcontainer">
+    <input id="inpName" type="text" placeholder="Enter your name...">
+    <input id="inpAge" type="number" placeholder="Enter your age...">
+    <button onclick="storeDetails()">Submit</button>
+  </div>
+
+  <script>
+    let username = localStorage.getItem("name");
+    let age = localStorage.getItem("age");
+    if (username){
+      doc.querySelector(".inpcontainer").style.display = "none";
+      const uname = document.querySelector("#printName");
+      uname.textContent = username.value;
+      const uage = document.querySelector("#printAge");
+      uage.textContent = age.value;
+
+      uname.style.display = "block";
+      uage.style.display = "block";
+      setTimeout(() => {
+        uname.style.opacity = "1";
+        uage.style.opacity = "1";
+      })
+    }
+    function storeDetails(){
+      username = document.querySelector("#inpName");
+      age = document.querySelector("#inpAge");
+      localStorage.setItem("name", username);
+      localStorage.setItem("age", age);
+      document.querySelector(".inpcontainer").style.display = "none";
+      uname = document.querySelector("#printName");
+      uname.textContent = username.value;
+      uage = document.querySelector("#printAge");
+      uage.textContent = age.value;
+      uname.style.display = "block";
+      uage.style.display = "block";
+      setTimeout(() => {
+        uname.style.opacity = "1";
+        uage.style.opacity = "1";
+      }, 1000)
+    }
+    let clickCount = localStorage.getItem("clickCount") ? parseInt(localStorage.getItem("clickCount")):0;
+    const clickCounter = document.querySelector("#clickCounter");
+    clickCounter.textContent = `Number of clicks: ${clickCount}`;
+    document.querySelector("#clickButton").addEventListener("click", function(){
+      clickCount++;
+      localStorage.setItem("clickCount", clickCount)
+      clickCounter.textContent = `Number of clicks: ${clickCount}`;
+    })
+    function resetCount(){
+      localStorage.clear();
+      clickCount = 0;
+      clickCounter.textContent = `Number of clicks: 0`;
+    }
+  </script>
+</body>
+</html>

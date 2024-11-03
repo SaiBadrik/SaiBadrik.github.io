@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Event Listeners</title>
+  <style>
+    .box{
+      height: 200px;
+      width: 300px;
+      background-color: #333;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 1s ease-in-out;
+    }
+    body{
+        transition: all 1s ease-in-out;
+    }
+    #todo-container{
+      width: 300px;
+      margin: 0 auto;
+    }
+    #todo-list{
+      list-style: none;
+      padding: 0;
+    }
+    #todo-list li{
+      padding: 10px;
+      background-color: #f0f0f0;
+      margin: 5px 0;
+      cursor: pointer;
+    }
+    #todo-list li.completed{
+      text-decoration: line-through;
+      background-color: #ccc;
+    }
+
+    #todo-list li:hover{
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <!-- Event Propagation -->
+  <!-- How an event travels through the DOM -->
+  <!-- 1. Event Capturing : The event starts from the root and moves to the 
+   target element. -->
+  <!-- 2. Event Bubbling: The event starts from the target element
+   and bubbkes up to the root -->
+
+
+  <!-- Event Delegation: 
+   It is a technique that allows you to handle events by attaching a single 
+   event listener to a parent element, and using the events target to detect which 
+   child was clicked. 
+  -->
+   <div id="parent">
+    <button id="child">Click here!</button>
+   </div>
+
+   <div id="list">
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+    <li>Item 4</li>
+   </div>
+
+   <div class="box" data-status="active">
+    <span id="text-status">NULL</span>
+   </div>
+   <br><br><br>
+   <div id="todo-container">
+    <h2>To Do List</h2>
+    <input type="text" id="todo-input" placeholder="Enter a new task...">
+    <button id="add-todo">Add Task</button>
+    <ul id="todo-list"></ul>
+   </div>
+
+
+   <script>
+    document.querySelector("#parent").addEventListener("click", function(){
+      alert("Parent Click!");
+    })
+
+    document.querySelector("#child").addEventListener("click", function(){
+      alert("Child Click!");
+      event.stopPropagation();
+    })
+
+    const list = document.querySelector("#list");
+    list.addEventListener("click", function(){
+      if(event.target.tagName === "LI"){
+        alert(`You clicked on: ${event.target.textContent}`);
+      }
+    })
+
+    const box = document.querySelector(".box");
+    box.addEventListener("click", function(){
+      let activity = box.getAttribute("data-status");
+      document.querySelector("#text-status").textContent = activity;
+      if(activity === "active"){
+        box.setAttribute("data-status", "offline");
+        box.style.color = "lime";
+        box.style.background = "white";
+        document.querySelector("body").style.background = "#333";
+      }
+      else{
+        box.setAttribute("data-status", "active");
+        box.style.color = "red";
+        box.style.background = "#333";
+        document.querySelector("body").style.background = "white";
+      }
+    })
+
+    const todoInput = document.getElementById("todo-input");
+      const todolist = document.getElementById("todo-list");
+      let todos = JSON.parse(localStorage.getItem("todos")) || [];
+      function saveToLocal() {
+        localStorage.setItem("todos", JSON.stringify(todos));
+      }
+      function renderTodos() {
+        todolist.innerHTML = "";
+        todos.forEach((todo, index) => {
+          const listItem = document.createElement("li");
+          listItem.textContent = todo.text;
+          if (todo.completed) {
+            listItem.classList.add("completed");
+          }
+          listItem.addEventListener("click", function () {
+            todos[index].completed = !todos[index].completed;
+            saveToLocal();
+            renderTodos();
+          });
+          listItem.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+            todos.splice(index, 1);
+            saveToLocal();
+            renderTodos();
+          });
+          todolist.appendChild(listItem);
+        });
+      }
+      function addTodo() {
+        const taskText = todoInput.value.trim();
+        if (taskText) {
+          todos.push({ text: taskText, completed: false });
+          saveToLocal();
+          renderTodos();
+          todoInput.value = "";
+        }
+      }
+      const addBtn = document.getElementById("add-todo");
+      addBtn.addEventListener("click", addTodo);
+      renderTodos();
+   </script>
+</body>
+</html>

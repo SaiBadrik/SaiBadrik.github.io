@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Functions</title>
+  <style>
+    .buttons{
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .calculator{
+      margin: auto;
+      align-items: center;
+      text-align: center;
+      border: 5px solid black;
+      width: fit-content;
+      padding: 20px;
+      border-radius: 10px;
+      animation-name: light;
+      animation-iteration-count: infinite;
+      animation-duration: 7s;
+    }
+    @keyframes light {
+      0%{
+        border-color: darkgreen;
+        box-shadow: 0 0 10px light green;
+      }
+      25%{
+        border-color: blue;
+        box-shadow: 0 0 10px cyan; 
+      }
+      50%{
+        border-color: rgb(157, 9, 157);
+        box-shadow: 0 0 10px lavender;
+      }
+      75%{
+        border-color: rgb(221, 11, 11);
+        box-shadow: 0 0 10px light pink;
+      }
+      100%{
+        border-color: darkgreen;
+        box-shadow: 0 0 10px light green;
+      }
+    }
+    .display{
+      border: 2px solid red;
+      background-color: rgba(255, 79, 79, 0.747);
+      margin-bottom: 10px;
+      padding: 5px;
+      border-radius: 10px;
+    }
+    h1{
+      text-align: center;
+      animation-name: light;
+      animation-iteration-count: infinite;
+      animation-duration: 7s;
+      width: fit-content;
+      margin: auto;
+      margin-bottom: 30px;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    body{
+      background-color: #333;
+      color: white;
+    }
+    button{
+      background-image: linear-gradient(black, gray);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 id="Greet"></h2>
+    <button id="greetBtn">Say Hi</button>
+  </div>
+
+  <h1>My Calculator</h1>
+  <div class="calculator">
+    <div class="display">Hey!</div>
+    <br>
+    <div class="buttons">
+      <div>
+        <button class="button" onclick="appendNumber('1')">1</button>
+        <button class="button" onclick="appendNumber('2')">2</button>
+        <button class="button" onclick="appendNumber('3')">3</button>
+        <button class="button" onclick="appendOperator('+')">+</button>  
+      </div>
+      <div>
+        <button class="button" onclick="appendNumber('4')">4</button>
+        <button class="button" onclick="appendNumber('5')">5</button>
+        <button class="button" onclick="appendNumber('6')">6</button>
+        <button class="button" onclick="appendOperator('-')">-</button>
+      </div>
+      <div>    
+        <button class="button" onclick="appendNumber('7')">7</button>
+        <button class="button" onclick="appendNumber('8')">8</button>
+        <button class="button" onclick="appendNumber('9')">9</button>
+        <button class="button" onclick="appendOperator('*')">x</button>
+      </div>
+      <div>
+        <button class="button clear" onclick="clearDisplay()">C</button>
+        <button class="button" onclick="appendNumber('0')">0</button>
+        <button class="button" onclick="calculate()">=</button>
+        <button class="button" onclick="appendOperator('/')">/</button>  
+      </div>
+      <div>
+        <button class="button" onclick="appendLeftB()">(</button>
+        <button class="button" onclick="appendRightB()">)</button>
+      </div>
+  
+    </div>
+  </div>
+  <script>
+    function greet()
+    {
+      alert("Good Evening!");
+      document.querySelector("#Greet").textContent = "Good Evening!";
+    }
+
+    const btn = document.getElementById("greetBtn")
+    btn.addEventListener("click", greet)
+
+    let display = document.querySelector(".display");
+    let currentInput = '';
+
+    function appendNumber(num)
+    {
+      currentInput+=num;
+      display.textContent = currentInput;
+    }
+    function appendOperator(op)
+    {
+      currentInput+=op;
+      display.textContent = currentInput;
+    }
+    function appendLeftB()
+    {
+      currentInput+="(";
+      display.textContent = currentInput;
+    }
+    function appendRightB()
+    {
+      currentInput+=")";
+      display.textContent = currentInput;
+    }
+    function clearDisplay()
+    {
+      display.textContent = "Display Cleared!";
+      currentInput="";
+    }
+    function calculate()
+    {
+      const result = eval(currentInput);
+      display.textContent = result;
+    }
+  </script>
+</body>
+</html>
