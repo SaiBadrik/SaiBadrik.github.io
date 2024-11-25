@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meme Generator</title>
+</head>
+<style>
+  body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: powderblue;
+  }
+  header{
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+  }
+  main{
+    padding: 20px;
+  }
+  h2{
+    margin-bottom: 10px;
+  }
+  #templates-container img{
+    width: 150px;
+    height: auto;
+    cursor: pointer;
+    border: 2px all rgb(6, 159, 159);
+    box-shadow: 0 0 10px rgb(99, 99, 244);
+    transition: all 1s ease-in-out;
+  }
+  #templates-container img.selected{
+    border-color: green;
+    scale: 1.1;
+  }
+  form{
+    margin-bottom: 20px;
+  }
+  label{
+    display: block;
+    margin: 10px;
+  }
+  input{
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  button{
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover{
+    background-color: #102e9a;
+  }
+  #meme-result{
+    text-align: center;
+    opacity: 0;
+    transition: all 1s ease-in-out;
+  }
+  #meme-result{
+    max-width: 100%;
+    margin-top: 10px;
+  }
+  #templates-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  #templates-container img{
+    width: 350px;
+    justify-content: center;
+  }
+</style>
+<body>
+  <header>
+    <h1>Our Meme Generator</h1>
+  </header>
+  <main>
+    <section id="meme-list">
+      <h2>Select a meme template</h2>
+      <div id="templates-container"></div>
+    </section>
+    <section id="meme-generator">
+      <h2>Create your meme!</h2>
+      <form id="meme-form">
+        <label for="top-text">Top Text</label>
+        <input type="text" id="top-text" placeholder="Enter the top text..." required>
+        <label for="bottom-text">Bottom Text</label>
+        <input type="text" id="bottom-text" placeholder="Enter the bottom text..." required>
+        <button type="submit">Generate Meme</button>
+      </form>
+      <div id="meme-result">
+        <h3>Your Meme!</h3>
+        <img src="" alt="Generated Meme" id="meme-image">
+        <p id="meme-url"></p>
+      </div>
+    </section>
+  </main>
+</body>
+<script>
+  const templatesContainer = document.getElementById("templates-container");
+  const memeForm = document.getElementById('meme-form');
+  const memeImage = document.getElementById('meme-image');
+  const memeUrl = document.getElementById('meme-url');
+  let selectedTemplateId = null;
+  fetch('https://api.imgflip.com/get_memes')
+    .then(response=>
+    response.json())
+    .then(data=>{
+    if(data.success)
+    {
+      displayTemplates(data.data.memes);
+      console.log(data);
+    }
+    else
+    console.error("Failed to fetch memes! ", data.error_message);
+    })
+  function displayTemplates(templates){
+    templates.forEach(template => {
+      const img = document.createElement("img");
+      img.src = template.url;
+      img.alt = template.name;
+      img.dataset.id = template.id;
+      img.addEventListener('click', ()=>{
+        document.querySelectorAll('#templates-container img').forEach(el => 
+          el.classList.remove('selected'));
+        img.classList.add("selected");
+        selectedTemplateId = template.id;
+      });
+      templatesContainer.appendChild(img);
+    });
+  }
+  memeForm.addEventListener('submit', async(e)=>{
+    e.preventDefault();
+    if(!selectedTemplateId){
+      alert('Please select a template first!');
+      return;
+    }
+    const topText = document.getElementById("top-text").value;
+    const bottomText = document.getElementById("bottom-text").value;
+    const username = "SaiBadrik";
+    const password = 'LBPV@143';
+    const formData = new URLSearchParams({
+      template_id:  selectedTemplateId,
+      username,
+      password,
+      text0: topText,
+      text1: bottomText,
+    });
+    try{
+      const response = await fetch('https://api.imgflip.com/caption_image',{
+        method: 'POST',
+        body: formData
+      });
+      const result = await response.json();
+      if(result.success){
+        memeImage.src = result.data.url;
+        memeUrl.innerHTML = `URL: <a href="${result.data.url}" target=_blank">${result.data.url}</a>`
+        setTimeout(() => {
+          document.querySelector("#meme-result").style.opacity = 1;
+        }, 1000);
+      }
+      else{
+        alert("An error occured!")
+      }
+    }
+    catch(err){
+      console.error(err)
+    }
+  })
+</script>
+</html>

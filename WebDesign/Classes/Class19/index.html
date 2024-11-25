@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookies II</title>
+  <style>
+    body{
+      background: url(https://media4.giphy.com/media/rFVrK6tfJ7JVk6JdGF/giphy.gif);
+    }
+    .whole{
+      background-color: #fff;
+      border-radius: 10px;
+      padding-bottom: 10px;
+      align-items: center;
+      margin: auto;
+      justify-content: center;
+      text-align: center;
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="whole">
+    <h1 id="greetings">Hello!</h1>
+    <p id="content">Welcome to my webpage! Choose your language preference</p>
+    <div class="">
+      <button onclick="setLanguage('en')">English</button>
+      <button onclick="setLanguage('es')">Spanish</button>
+      <button onclick="setLanguage('fr')">French</button>
+      <button onclick="setLanguage('ch')">Chinese</button>
+      <button onclick="setLanguage('hi')">Hindi</button>
+    </div>
+  </div>
+  <script>
+    const translations = {
+      en: {
+        greetings: "Hello!",
+        content : "Welcome to my webpage! Choose your language preference"
+      },
+      es: {
+        greetings: "Hola!",
+        content : "Bienvenidos a mi página web. Elija su preferencia de idioma"
+      },
+      fr: {
+        greetings: "Bonjour!",
+        content : "Bienvenue sur ma page Web. Choisissez votre préférence de langue"
+      },
+      ch: {
+        greetings: "你好！",
+        content : "歡迎來到我的網頁。選擇您的語言偏好"
+      },
+      hi: {
+        greetings: "नमस्ते!",
+        content : "मेरे नये वेब पृष्ठ पर आपका स्वागत है! अपनी भाषा प्राथमिकता चुनें"
+      }
+    }
+
+    function setLanguage(language){
+      document.cookie = `language=${language};path=/;expires=Fri, 31 Dec 2024 23:59:59 HKT`;
+      applyLanguage(language);
+    }
+    function applyLanguage(language){
+      document.getElementById("greetings").textContent = translations[language].greetings;
+      document.getElementById("content").textContent = translations[language].content;
+    }
+    function getCookie(name){
+      const value = `;${document.cookie}`;
+      const parts = value.split(`;${name}=`);
+      if(parts.length === 2){
+        return parts.pop().split(";").shift();}
+    }
+    window.onload = function(){
+      const savedLang = getCookie('language');
+      if(savedLang && translations[savedLang]){
+        applyLanguage(savedLang);
+      }
+    }
+  </script>
+</body>
+</html>

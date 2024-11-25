@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preloaders!</title>
+  <style>
+    #preloader{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      z-index: 1000;
+    }
+    .loader{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
+      border: 10px solid #5903aa;
+      border-top-color: #fff;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin{
+      0%{
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      100%{
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+    #enter{
+      opacity: 0;
+      display: none;
+      position: absolute;
+      top: 80%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    #preloader.loaded{
+      display: none;
+    }
+    
+  </style>
+</head>
+<body>
+  <div id="preloader">
+      <img src="https://cdn.pixabay.com/animation/2023/10/08/03/19/03-19-26-213_512.gif" alt="This image can't be loaded">
+      <div class="loader"></div>
+      <button id="enter">Enter the page!</button>
+    </div>
+  <div class="content">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+    Repellat, blanditiis vero nam fugit veniam consequuntur 
+    amet doloremque voluptate beatae non?
+  </div>
+  <script>
+    window.addEventListener("load",function(){
+      document.getElementById("enter").style.display = "block";
+      document.getElementById("enter").style.opacity = "1";
+
+      document.getElementById("enter").addEventListener("click", function(){
+        document.getElementById("preloader").classList.add("loaded");
+      })
+    })
+  </script>
+</body>
+</html>

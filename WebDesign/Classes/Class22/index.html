@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+<style>
+
+  body{
+    font-family: Arial;
+    text-align: center;
+    margin-top: 50px;
+    transition: all 2s ease;
+    background-color: #fff;
+  }
+  body.green{
+    background-color: lime;
+  }
+  body.red{
+    background-color: red;
+  }
+.board{
+  display: grid;
+  grid-template-columns: repeat(3,100px);
+  grid-gap: 5px;
+  justify-content: center;
+
+}
+.cell{
+  width: 100px;
+  height: 100px;
+  border: 2px solid #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.cell.taken{
+  cursor: not-allowed;
+  background-color: #f0f0f0;
+
+}
+.message{
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+
+
+}
+
+button{
+  margin-top: 20px;
+  padding: 20px;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+  <h1>Tic tac toe game</h1>
+  <div class="board" id="board">
+    
+  </div>
+  <div class="message" id="message"></div>
+  <button onclick="resetGame();">Restart Game</button>
+
+</body>
+<script>
+  const board = document.getElementById("board");
+  const message = document.getElementById("message");
+
+  let cells = Array(9).fill(null)
+  let currentPlayer = "X" // user
+
+  function initialiseBoard()
+  {
+    board.innerHTML = "";
+    cells = Array(9).fill(null)
+    currentPlayer = "X"
+    message.textContent = "Your turn"
+    for(let i = 0; i < 9; i++)
+  {
+    const cell = document.createElement("div")
+    cell.classList.add("cell")
+    cell.dataset.index  = i;
+    cell.addEventListener("click", handlePlayerMove);
+    board.appendChild(cell)
+
+  }
+  }
+function handlePlayerMove(event)
+{
+  const index = event.target.dataset.index;
+  if(cells[index] || checkWinner()) 
+  return;
+
+  cells[index] = currentPlayer;
+  event.target.textContent = currentPlayer;
+  event.target.classList.add("taken");
+  if(checkWinner())
+{
+  message.textContent = "You win!";
+}
+else if(isDraw())
+{
+  message.textContent("It is a draw!")
+
+}
+else{
+  currentPlayer = "O"
+
+  message.textContent = "Computer's turn";
+  
+  setTimeout(makeComputerMove , 500);
+}
+}
+
+
+function makeComputerMove()
+{
+  const emptyCells  = cells.map((cell, index)=>
+(cell === null? index : null)).filter((index)=> index!= null);
+
+
+if(emptyCells.length>0)
+{
+  const randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+  cells[randomIndex] = "O";
+  const cell  = document.querySelector(` [data-index = '${randomIndex}']`);
+  cell.textContent = "O"
+  cell.classList.add("taken")
+  if(checkWinner())
+{
+  message.textContent  = "computer  wins! :("
+  
+}
+else if(isDraw())
+{
+  
+  message.textContent  = "It's a draw!"
+}
+else{
+  currentPlayer  =  "X"
+  message.textContent  = "Your turn"
+  
+}
+}
+}
+  
+function checkWinner()
+{
+  const  winningCombinations   =
+  [
+    [0,1,2],
+    [3,4,5],
+  [6,7,8],
+[0,3,6],
+[1,4,7] ,
+[2,5,8],
+[0,4,8],
+[2,4,6] 
+];
+
+for(const combination of winningCombinations)
+{
+  const [a,b,c] =  combination;
+  if(cells[a] && 
+
+  cells[a] === cells[b] &&
+  cells[a] == cells[c] )
+  {
+    return  true;
+  }
+  
+}
+return false;
+
+}
+
+function isDraw()
+{
+  return cells.every((cell)=> cell!=null) &&  !checkWinner();
+
+}
+
+function resetGame()
+{
+  initialiseBoard();
+}
+
+initialiseBoard();
+</script>
+</html>

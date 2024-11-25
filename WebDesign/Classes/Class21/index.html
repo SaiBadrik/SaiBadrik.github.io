@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asynchronous Code</title>
+</head>
+<style>
+  body{
+    font-family: Arial;
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5;
+  }
+  .container{
+    width: 80%;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .post-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .post{
+    padding: 10px;
+    background: #e0e0e0;
+    margin: 5px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 1s ease;
+    height: 200px;
+    width: 100px;
+  }
+  .post:hover{
+    background: #c0c0c0;
+    scale: 1.1;
+  }
+  .post-details{
+    display: none;
+    padding: 10px;
+    margin-top: 20px;
+    background: #f0f0f0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  .postID{
+    opacity: 1;
+    color: blue;
+    font-weight: bold;
+  }
+</style>
+<body>
+  <div class="container">
+    <h1>Async/Await Blog</h1>
+    <div class="post-details" id="postDetails">
+      <h2 id="postTitle"></h2>
+      <p id="postBody"></p>
+    </div>
+    <div class="post-list" id="postList"></div>
+  </div>
+  <script>
+    let apiSite = "https://jsonplaceholder.typicode.com/posts";
+    async function fetchPosts() {
+      try{
+        let response = await fetch(apiSite);
+        let posts = await response.json();
+        displayPosts(posts);
+      }
+      catch(error){
+        console.error("Error fetching the posts");
+      }
+    }
+    function displayPosts(posts){
+      const postList = document.getElementById("postList");
+      postList.innerHTML = '';
+      let x = 0;
+      posts.forEach(post => {
+        const postElement = document.createElement("div");
+        postElement.classList.add("post");
+        postElement.innerText = post.title;
+        postElement.onclick = () => showPostDetails(post);
+        postList.appendChild(postElement);
+        const idTag = document.createElement("span");
+        x++;
+        idTag.innerText = x;
+        idTag.classList.add("postID");
+        postElement.appendChild(idTag);
+      });
+    }
+    function showPostDetails(post){
+      const postDetails = document.getElementById("postDetails");
+      const postTitle = document.getElementById("postTitle");
+      const postBody = document.getElementById("postBody");
+      postTitle.innerText = post.title;
+      postBody.innerText = post.body;
+      postDetails.style.display = "block";
+    }
+    fetchPosts();
+  </script>
+</body>
+</html>

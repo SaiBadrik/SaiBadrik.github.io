@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Image Generator</title>
+</head>
+<style>
+  body{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #333;
+  }
+  .main-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .heading{
+    color: plum;
+  }
+  h1{
+    color: rgb(255, 255, 255);
+    text-shadow: 0 0  10px purple;
+  }
+  .headings-container{
+    text-align: center;
+    color: white;
+    text-shadow: 0 0 5px purple;
+    font-size: 1.5em;
+  }
+  .container{
+    padding: 20px;
+    border: 2px solid #ccc;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgb(87, 3, 139);
+  }
+  .form-controls{
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+  }
+  .form-input:focus{
+    outline: none;
+  }
+  .image-generate-btn{
+    background-color: rgb(193, 28, 83);
+    color: white;
+    cursor: pointer;
+    transition: all 1s ease;
+  }
+  .image-generate-btn:hover{
+    background-color: rgb(158, 6, 130);
+    color: rgb(255, 154, 188);
+  }
+  #imageContainerText{
+    color: white;
+  }
+  .image-container{
+    margin: 50px 0;
+    display: none;
+    text-align: center;
+    opacity: 0;
+    transition: all 1s ease-in-out;
+  }
+  .my-generated-image{
+    width: 80%;
+  }
+  .stop{
+    background-color: crimson;
+  }
+  .running{
+    background-color: gold;
+  }
+  .finish{
+    background-color: lime;
+  }
+</style>
+<body>
+  <div class="main-container">
+    <div class="container">
+      <div class="headings-container">
+        <h1>Our AI Image Generator</h1>
+        <h2 class="heading">Created by Badrik</h2>
+        <h4 class="sub-heading">Enter the text prompt in the input below</h5>
+      </div>
+      <div class="form-container" id="generate-image-form">
+        <form action="" class="myform">
+          <input type="text" id="input-value" class="form-input form-controls" placeholder="Enter your prompt...">
+          <button type="submit" class="image-generate-btn form-controls">Generate Image</button>
+        </form>
+      </div>
+      <div class="image-container" id="images-visible">
+        <p id="imageContainerText"></p>
+        <img src="" alt="AI Generated" id="generated-image" class="my-generated-image">
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  let generatedImageForm = document.getElementById("generate-image-form");
+  let formInput = document.getElementById("input-value");
+  let imageContainerText = document.getElementById("imageContainerText");
+  let imageGenerated = document.getElementById("generated-image");
+  let imageContainer = document.getElementById("images-visible");
+  async function fetchImages(prompt){
+    try{
+      let apiUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1024&height=1024&nologo=true`;
+      let response = await fetch(apiUrl);
+      if(!response.ok){
+        throw new Error('Unable to fetch the image. Please try again later!')
+        document.querySelector(".image-generate-btn").classList.add("stop");     
+      }
+      imageContainerText.innerText = "Your image has been generated";
+      imageGenerated.src = response.url;
+      document.querySelector(".image-container").style.opacity = 1;
+      document.querySelector(".image-container").style.display = "block";
+    }
+    catch(error){
+      console.error(error);
+      imageContainerText.innerText = "An error occured. Try again later!";
+    }
+  }
+  generatedImageForm.addEventListener("submit", (e)=>{
+    document.querySelector(".image-generate-btn").classList.add("running");
+    document.querySelector(".image-generate-btn").classList.remove("stop");
+    document.querySelector(".image-generate-btn").classList.remove("finish");
+    e.preventDefault();
+    let enteredText = formInput.value.trim();
+    if(enteredText !== ""){
+      fetchImages(enteredText)
+    }
+    else{
+      imageContainerText.innerText = "Input field cannot be empty!"
+      imageContainer.style.display = "none";
+      document.querySelector(".image-generate-btn").classList.remove("running");
+      document.querySelector(".image-generate-btn").classList.add("stop");
+    }
+  })
+</script>
+</html>
