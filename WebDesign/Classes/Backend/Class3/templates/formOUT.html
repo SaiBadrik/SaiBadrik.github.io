@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Details</title>
+</head>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  .container {
+    width: 50%;
+    margin: auto;
+    padding: 50px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 1s ease;
+  }
+  .container:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    background-image: url(https://bestanimations.com/media/fireworks/1962490925amazing-electrc-feel-fireworks-gif.gif);
+    color: white;
+  }
+  h2 {
+    text-align: center;
+  }
+  p {
+    margin-bottom: 10px;
+  }
+</style>
+<body>
+  <div class="container">
+    <h2>Hey!</h2>
+    <p>Hope you're doing well!</p>
+    <p>Here are the details you submitted:</p>
+    <p><strong>Name:</strong> {{details.name}}</p>
+    <p><strong>Age:</strong> {{details.age}}</p>
+    <p><strong>Gender: </strong> {{details.gender}}</p>
+  </div>
+</body>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forms in Flask</title>
+</head>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  form {
+    width: 50%;
+    margin: 0 auto;
+    padding: 50px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  input[type="radio"] {
+    margin-bottom: 5px;
+  }
+  .radio-group {
+    margin-bottom: 20px;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: baseline;
+  }
+  input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+<body>
+  <h1>A Simple Form</h1>
+  <form action="/submitform" method="POST">
+    <label for="name">Enter your name:</label>
+    <input type="text" name="name" placeholder="Enter your name">
+    <br>
+    <label for="age">Enter your age:</label>
+    <input type="number" name="age" placeholder="Enter your age">
+    <br>
+    <label>Choose your gender: </label>
+    <br>
+    <div class="radio-group">
+      <label>Male</label>
+      <input type="radio" value="Male" name="gender">
+    </div>
+    <div class="radio-group">
+      <label>Female</label>
+      <input type="radio" value="Female" name="gender">
+    </div>
+    <div class="radio-group">
+      <label>Others</label>
+      <input type="radio" value="Others" name="gender">
+    </div>
+    <input type="submit">
+  </form>
+</body>
+</html>

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taobao</title>
+  <style>
+    body{
+      justify-content: center;
+    }
+    .header{
+      display: flex;
+      flex-direction: column;
+    }
+    .first-header{
+      display: flex;
+      flex-direction: row;
+      background-color: rgb(225, 225, 225);
+      align-items: center;
+      border-radius: 10px;
+      height: fit-content;
+      justify-content: center;
+    }
+    .logo{
+      height: fit-content;
+      margin: 10px;
+      width: 25%;
+      scale: 0.65;
+    }
+    .deliver{
+      margin: 10px;
+    }
+    .header-button{
+      margin: 10px;
+      background-color: none;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+      padding: 10px;
+    }
+    .header-button:hover{
+      background-color: orange;
+      color: rgb(156, 102, 3);
+    }
+    .location{
+      cursor: pointer;
+    }
+    .second-header{
+      display: flex;
+      flex-direction: row;
+      align-items: right;
+      height: fit-content;
+      justify-content: center;
+    }
+    .third-header{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+    .searchbar-box{
+      width: 75%;
+      border: 2px solid orange;
+      height: 50px;
+      border-radius: 10px;
+      padding: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+    .searchbar{
+      width: 70%;
+      height: 50px;
+      border-radius: 10px;
+      border: 2px solid orange;
+    }
+    .searchbtn{
+      width: 29%;
+      height: 50px;
+      background-color: orange;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .classification{
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background-color: rgb(255, 119, 0);
+      width: 1fr;
+      padding: 20px;
+      color: white;
+      border-radius: 10px;
+    }
+    .classification-a{
+      transition: all 0.5s ease-in-out;
+    }
+    .classification-a:hover{
+      background-color: white;
+      color: black;
+      padding: 5px;
+      scale: 1.05;
+      border-radius: 15px;
+    }
+    .selection{
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+    }
+    .selection-main-div{
+      display: flex;
+      width: 2fr;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .top-bar{
+      background-color: rgb(225, 224, 224);
+      height: 15%;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 10px;
+      padding: 10px;
+
+    }
+    .top-bar a:hover{
+      color: rgb(209, 136, 1);
+      cursor: pointer;
+    }
+    .bottom-bar{
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+    }
+    .middle-selection-main{
+      display: flex;
+      flex-direction: column;
+      width: 1fr;
+      height: 100%;
+      gap: 8px;
+    }
+    .first-selection-main{
+      width: 1fr;
+      height: 100%;
+    }
+    .last-selection-main{
+      width: 1fr;
+      height: 100%;
+      margin-left: 10px;
+    }
+    .account-selection-div{
+      width: 1fr;
+      height: 100%;
+    }
+    .categories{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+    }
+    .choices{
+      width: 20%;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+    }
+    #products{
+      min-height: 100vh;
+      height: fit-content;
+    }
+    .product-list{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .product{
+      width: 400px;
+      border: 2px solid orange;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      border-radius: 15px;
+    }
+    .prodBtn{
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid orange;
+      background-color: white;
+      margin-top: auto;
+      transition: all 0.5s ease-in-out;
+    }
+    .prodBtn:hover{
+      background-color: orange;
+      color: black;
+    }
+    .title{
+      color: orange;
+      text-decoration: none;
+      font-size: 20px;
+    }
+    .header-button a{
+      text-decoration: none;
+      color: black;
+    }
+    #cart{
+      min-height: 100vh;
+      height: fit-content;
+    }
+    #cart-items{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #clear-cart{
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid orange;
+      background-color: white;
+      transition: all 0.5s ease-in-out;
+    }
+    #clear-cart:hover{
+      background-color: orange;
+      color: black;
+    }
+    .displayScreen{
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+    .displayDetails{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .closeBtn{
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px;
+      border: none;
+      background-color: red;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="first-header">
+      <p class="deliver">Deliver to <strong class="location">Hong Kong</strong></p>
+      <button class="header-button">Login</button>
+      <button class="header-button">Sign Up</button>
+    </div>
+    <div class="second-header">
+      <button class="header-button">My Taobao Account</button>
+      <button class="header-button"><a href="#cart">My Cart</a></button>
+      <button class="header-button">My Favourites</button>
+    </div>
+  </header>
+  <header class="third-header">
+    <img class="logo" src="Taobao_logo_(2021).svg.png" alt="Taobao Logo">
+    <div class="searchbar-box">
+      <input type="search" class="searchbar">
+      <button class="searchbtn">Search</button>
+    </div>
+  </header>
+  <main>
+    <section class="selection">
+      <div class="classification">
+        <strong>Classification</strong>
+          <a class="classification-a">Women/Men's/Accessories</a>
+          <a class="classification-a">Furniture/Home Updrades</a>
+          <a class="classification-a">Home Appliances/Cell Phones</a>
+          <a class="classification-a">Women's Shoes/Men's Shoes</a>
+          <a class="classification-a">Mother and Baby/Children</a>
+          <a class="classification-a">Beauty/Cleaning/Pets</a>
+      </div>
+      <div class="selection-main-div">
+        <div class="top-bar">
+          <a>Home</a> | <a>TMALL</a> | <a>Travel</a>
+        </div>
+        <div class="bottom-bar">
+          <div class="first-selection-main">
+              <img style="width: 100%; height: 100%;" src="Selection1.png" alt="">
+          </div>
+          <div class="middle-selection-main">
+            <div style="height: 50%;">
+              <img style="height: 100%;"src="Selection2.png" alt="">
+            </div>
+            <div style="height: 50%;">
+              <img style="height: 100%;" src="Selection3.png" alt="">
+            </div>
+          </div>
+          <div class="last-selection-main">
+            <img src="Selection4.png" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="account-selection-div">
+        <img src="Selection5.png" alt="">
+      </div>
+    </section>
+    <section id="products">
+      <h2>Products</h2>
+      <div class="product-list"></div>
+    </section>
+    <section id="cart">
+      <h2>Shopping Cart</h2>
+      <ul id="cart-items"></ul>
+      <p>Total: $<span id="cart-total">0.0</span></p>
+      <button id="clear-cart">Clear Cart</button>
+    </section>
+  </main>
+</body>
+<script>
+const products = [
+    {
+      id:1,
+      name:"Razer BlackShark V2 X Gaming Headset: 7.1 Surround Sound - 50mm Drivers - Memory Foam Cushion - For PC, PS4, PS5, Switch - 3.5mm Audio Jack - Black",
+      price: 34.99,
+      image: "https://m.media-amazon.com/images/I/51FRJHB7XOL._AC_SY355_.jpg",
+      url: "https://item.taobao.com/item.htm?id=682475710095&spm=a2141.241046-global.201876.d1&eurl=http%3A%2F%2Fclick.mz.simba.taobao.com%2Fnecpm&itemIds=682475710095&scm=1007.35313.250647.0&region=GLOBAL&pisk=g9w-ZJ_sLZblcJMGET1m-0nPReS09JEPEzr6K20kOrUYfronKwrIAvUb-guuAazLpqMST70nr2HLYPIcSOXg4ukEFNbGIpZ7VVDZVQOW-qgjjvn7J88oGukEdwKDd1XT4Pa9tuUIAmsxxDvBNyGSlmirlDOSdygjGciMPvMQRinjvDJWPp9WltiEl2MIdyZfDDkaJ33HV2pLtZDd2oteCDn8H0h-5oC2dpQrTFDgV9veK-PYwVMikp9QH0E0QN02B60__4ci7r6DevEjvrhgwNp8JkZaOjepPg4_AzyxUACh4fFbi5c8Ma9Ko8mK1vGvApZxd7GQpA66kmPbqWwzyHpI482i9VlAAplnhRc_1zKFboMSAylaKNJrPkZaQ5DOeFo8GlHA4FygBx02SVnHNiIvTBlS07ooByLHpaXZDVjDiBREimoxSiIvOBTwIm3GmTdeTbod.",
+    },
+    {
+      id:2,
+      name:"Acer Nitro KG241Y Sbiip 23.8” Full HD (1920 x 1080) VA Gaming Monitor | AMD FreeSync Premium Technology | 165Hz Refresh Rate | 1ms (VRB) | ZeroFrame Design | 1 x Display Port 1.2 & 2 x HDMI 2.0,Black",
+      price: 94.99,
+      image: "https://m.media-amazon.com/images/I/71yo3bmyBnL._AC_SX355_.jpg",
+      url: "https://item.taobao.com/item.htm?id=682475710095&spm=a2141.241046-global.201876.d1&eurl=http%3A%2F%2Fclick.mz.simba.taobao.com%2Fnecpm&itemIds=682475710095&scm=1007.35313.250647.0&region=GLOBAL&pisk=g9w-ZJ_sLZblcJMGET1m-0nPReS09JEPEzr6K20kOrUYfronKwrIAvUb-guuAazLpqMST70nr2HLYPIcSOXg4ukEFNbGIpZ7VVDZVQOW-qgjjvn7J88oGukEdwKDd1XT4Pa9tuUIAmsxxDvBNyGSlmirlDOSdygjGciMPvMQRinjvDJWPp9WltiEl2MIdyZfDDkaJ33HV2pLtZDd2oteCDn8H0h-5oC2dpQrTFDgV9veK-PYwVMikp9QH0E0QN02B60__4ci7r6DevEjvrhgwNp8JkZaOjepPg4_AzyxUACh4fFbi5c8Ma9Ko8mK1vGvApZxd7GQpA66kmPbqWwzyHpI482i9VlAAplnhRc_1zKFboMSAylaKNJrPkZaQ5DOeFo8GlHA4FygBx02SVnHNiIvTBlS07ooByLHpaXZDVjDiBREimoxSiIvOBTwIm3GmTdeTbod.",
+    },
+    {
+      id:3,
+      name:"Redragon M612 Predator RGB Gaming Mouse, 8000 DPI Wired Optical Gamer Mouse with 11 Programmable Buttons & 5 Backlit Modes, Software Supports DIY Keybinds Rapid Fire Button",
+      price: 19.99,
+      image: "https://m.media-amazon.com/images/I/61vF4LdktpL._AC_SY355_.jpg",
+      url: "https://item.taobao.com/item.htm?id=682475710095&spm=a2141.241046-global.201876.d1&eurl=http%3A%2F%2Fclick.mz.simba.taobao.com%2Fnecpm&itemIds=682475710095&scm=1007.35313.250647.0&region=GLOBAL&pisk=g9w-ZJ_sLZblcJMGET1m-0nPReS09JEPEzr6K20kOrUYfronKwrIAvUb-guuAazLpqMST70nr2HLYPIcSOXg4ukEFNbGIpZ7VVDZVQOW-qgjjvn7J88oGukEdwKDd1XT4Pa9tuUIAmsxxDvBNyGSlmirlDOSdygjGciMPvMQRinjvDJWPp9WltiEl2MIdyZfDDkaJ33HV2pLtZDd2oteCDn8H0h-5oC2dpQrTFDgV9veK-PYwVMikp9QH0E0QN02B60__4ci7r6DevEjvrhgwNp8JkZaOjepPg4_AzyxUACh4fFbi5c8Ma9Ko8mK1vGvApZxd7GQpA66kmPbqWwzyHpI482i9VlAAplnhRc_1zKFboMSAylaKNJrPkZaQ5DOeFo8GlHA4FygBx02SVnHNiIvTBlS07ooByLHpaXZDVjDiBREimoxSiIvOBTwIm3GmTdeTbod.",
+    },
+    {
+      id:4,
+      name:"Razer BlackShark V2 X Gaming Headset: 7.1 Surround Sound - 50mm Drivers - Memory Foam Cushion - For PC, PS4, PS5, Switch - 3.5mm Audio Jack - Black",
+      price: 34.99,
+      image: "https://m.media-amazon.com/images/I/51FRJHB7XOL._AC_SY355_.jpg",
+      url: "https://item.taobao.com/item.htm?id=682475710095&spm=a2141.241046-global.201876.d1&eurl=http%3A%2F%2Fclick.mz.simba.taobao.com%2Fnecpm&itemIds=682475710095&scm=1007.35313.250647.0&region=GLOBAL&pisk=g9w-ZJ_sLZblcJMGET1m-0nPReS09JEPEzr6K20kOrUYfronKwrIAvUb-guuAazLpqMST70nr2HLYPIcSOXg4ukEFNbGIpZ7VVDZVQOW-qgjjvn7J88oGukEdwKDd1XT4Pa9tuUIAmsxxDvBNyGSlmirlDOSdygjGciMPvMQRinjvDJWPp9WltiEl2MIdyZfDDkaJ33HV2pLtZDd2oteCDn8H0h-5oC2dpQrTFDgV9veK-PYwVMikp9QH0E0QN02B60__4ci7r6DevEjvrhgwNp8JkZaOjepPg4_AzyxUACh4fFbi5c8Ma9Ko8mK1vGvApZxd7GQpA66kmPbqWwzyHpI482i9VlAAplnhRc_1zKFboMSAylaKNJrPkZaQ5DOeFo8GlHA4FygBx02SVnHNiIvTBlS07ooByLHpaXZDVjDiBREimoxSiIvOBTwIm3GmTdeTbod.",   
+    },
+    {
+      id:5,
+      name:"Acer Nitro KG241Y Sbiip 23.8” Full HD (1920 x 1080) VA Gaming Monitor | AMD FreeSync Premium Technology | 165Hz Refresh Rate | 1ms (VRB) | ZeroFrame Design | 1 x Display Port 1.2 & 2 x HDMI 2.0,Black",
+      price: 94.99,
+      image: "https://m.media-amazon.com/images/I/71yo3bmyBnL._AC_SX355_.jpg",
+      url: "https://item.taobao.com/item.htm?id=682475710095&spm=a2141.241046-global.201876.d1&eurl=http%3A%2F%2Fclick.mz.simba.taobao.com%2Fnecpm&itemIds=682475710095&scm=1007.35313.250647.0&region=GLOBAL&pisk=g9w-ZJ_sLZblcJMGET1m-0nPReS09JEPEzr6K20kOrUYfronKwrIAvUb-guuAazLpqMST70nr2HLYPIcSOXg4ukEFNbGIpZ7VVDZVQOW-qgjjvn7J88oGukEdwKDd1XT4Pa9tuUIAmsxxDvBNyGSlmirlDOSdygjGciMPvMQRinjvDJWPp9WltiEl2MIdyZfDDkaJ33HV2pLtZDd2oteCDn8H0h-5oC2dpQrTFDgV9veK-PYwVMikp9QH0E0QN02B60__4ci7r6DevEjvrhgwNp8JkZaOjepPg4_AzyxUACh4fFbi5c8Ma9Ko8mK1vGvApZxd7GQpA66kmPbqWwzyHpI482i9VlAAplnhRc_1zKFboMSAylaKNJrPkZaQ5DOeFo8GlHA4FygBx02SVnHNiIvTBlS07ooByLHpaXZDVjDiBREimoxSiIvOBTwIm3GmTdeTbod.",   
+    },
+    {
+      id:6,
+      name:"Redragon M612 Predator RGB Gaming Mouse, 8000 DPI Wired Optical Gamer Mouse with 11 Programmable Buttons & 5 Backlit Modes, Software Supports DIY Keybinds Rapid Fire Button",
+      price: 19.99,
+      image: "https://m.media-amazon.com/images/I/61vF4LdktpL._AC_SY355_.jpg",
+      url: "https://item.taobao.com/item.htm?id=682475710095&spm=a2141.241046-global.201876.d1&eurl=http%3A%2F%2Fclick.mz.simba.taobao.com%2Fnecpm&itemIds=682475710095&scm=1007.35313.250647.0&region=GLOBAL&pisk=g9w-ZJ_sLZblcJMGET1m-0nPReS09JEPEzr6K20kOrUYfronKwrIAvUb-guuAazLpqMST70nr2HLYPIcSOXg4ukEFNbGIpZ7VVDZVQOW-qgjjvn7J88oGukEdwKDd1XT4Pa9tuUIAmsxxDvBNyGSlmirlDOSdygjGciMPvMQRinjvDJWPp9WltiEl2MIdyZfDDkaJ33HV2pLtZDd2oteCDn8H0h-5oC2dpQrTFDgV9veK-PYwVMikp9QH0E0QN02B60__4ci7r6DevEjvrhgwNp8JkZaOjepPg4_AzyxUACh4fFbi5c8Ma9Ko8mK1vGvApZxd7GQpA66kmPbqWwzyHpI482i9VlAAplnhRc_1zKFboMSAylaKNJrPkZaQ5DOeFo8GlHA4FygBx02SVnHNiIvTBlS07ooByLHpaXZDVjDiBREimoxSiIvOBTwIm3GmTdeTbod.",
+    },
+  ]
+  let cart = [];
+  function loadProducts(){
+    const productList = document.querySelector(".product-list");
+    products.forEach((product)=>{
+      const productDiv = document.createElement("div");
+      productDiv.classList.add("product");
+      productDiv.innerHTML = `
+      <img src="${product.image}"
+      alt="${product.name}">
+      <a class="title" target="_blank" href="${product.url}">${product.name}</a>
+      <p>Price: $${product.price.toFixed(2)}</p>
+      <button class="prodBtn" onclick="addToCart(${product.id})">Add To Cart</button>`;
+      productList.appendChild(productDiv);
+    });
+  }
+  function addToCart(productId){
+    const product = products.find((p)=>p.id === productId);
+    cart.push(product);
+    updateCart();
+  }
+  function updateCart(){
+    const cartItems = document.getElementById("cart-items");
+    const cartTotal = document.getElementById("cart-total");
+    cartItems.innerHTML = '';
+    let total = 0;
+    cart.forEach((item)=>{
+      const li = document.createElement("li");
+      li.innerHTML = `<a onclick="displayScreen(${item.id})">${item.name} - $${item.price.toFixed(2)}</a>`;
+      cartItems.appendChild(li);
+      total+=item.price;
+    });
+    cartTotal.textContent = total.toFixed(2);
+  }
+  document.getElementById('clear-cart').addEventListener("click", function(){
+    cart = [];
+    updateCart();
+  });
+  function displayScreen(itemID)
+{
+  const displayScreen = document.querySelector(".displayScreen");
+  displayScreen.style.display = "block";
+  // <div class="displayDetails">
+  //   <span id="itemHead"></span>
+  //   <img id="ItemPic" src="" alt="" srcset="">
+  //   <span id="Description"></span>
+  //   <span id="displayPrice"></span>
+  // </div>
+  const item = products.find((p)=>p.id === itemID);
+  document.getElementById("itemHead").textContent = item.name;
+  document.getElementById("ItemPic").src = item.image;
+  document.getElementById("displayPrice").textContent = `Price: $${item.price.toFixed(2)}`
+}  
+  function closeDisplay()
+{
+  const displayScreen = document.querySelector(".displayScreen");
+  displayScreen.style.display = "none";
+}  
+
+loadProducts()
+</script>
+</html>

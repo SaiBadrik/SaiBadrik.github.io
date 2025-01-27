@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product List</title>
+</head>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  p {
+    text-align: center;
+    color: #666;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  li {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin: 10px;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+  }
+  img {
+    width: fit-content;
+    height: 100px;
+    margin: 0 auto 10px;
+    display: block;
+  }
+  .name {
+    color: #333;
+    font-weight: bold;
+  }
+  .price {
+    color: #666;
+  }
+</style>
+<body>
+  <h1>Product List</h1>
+  <p>Welcome to our smart store</p>
+  <ul>
+    {% for product in products %}
+      <li>
+        <img src="{{product.img}}" alt="{{product.name}}">
+        <div class="name">{{product.name}}</div>
+        <div class="name">${{product.price}}</div>
+      </li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "posts":[
+    {
+      "id":1,
+      "profilePic":"https://www.facebook.com/profilePic1.jpg",
+      "Username":"John Doe",
+      "content": "First post"
+    },
+    {
+      "id":1,
+      "profilePic":"https://www.facebook.com/profilePic1.jpg",
+      "Username":"John Doe",
+      "content": "First post"
+    },
+    {
+      "id":1,
+      "profilePic":"https://www.facebook.com/profilePic1.jpg",
+      "Username":"John Doe",
+      "content": "First post"
+    }
+  ]
+}

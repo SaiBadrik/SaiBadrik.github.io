@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Airbnb</title>
+</head>
+<style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .logo {
+    width: 15%;
+  }
+  .header-button{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: transparent;
+  }
+  #airbnb-your-home {
+    background-color: #FF385C;
+    color: white;
+  }
+  .login-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #FF385C;
+    border-radius: 30px;
+    padding: 0;
+    width: 30%;
+  }
+  .burger-menu {
+    width: 20px;
+  }
+  .second-part-header {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+  }
+  #language-selector {
+    width: 200px;
+  }
+  .search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+  }
+  .two-choices {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .search-bar {
+    justify-content: center;
+    flex-direction: row;
+    display: flex;
+    width: 100%;
+    border-radius: 250px;
+    border: #FF385C 1px solid;
+    padding: 20px;
+    justify-content: space-around;
+    transition: all 0.5s;
+  }
+  .search-type {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-right: 1px solid rgb(189, 189, 189);
+    width: 19%;
+    border-radius: 30px;
+  }
+  .search-type:hover{
+    background-color: rgb(227, 227, 227);
+  }
+  .search-bar:hover{
+    box-shadow: 0 0 10px 0 rgb(200, 0, 0);
+  }
+  input {
+    padding: 10px;
+    border: none;
+  }
+  label {
+    margin-bottom: 5px;
+  }
+  hr{
+    width: 100%;
+    border: 1px solid rgb(212, 212, 212);
+  }
+  #search-button{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    background-color: #FF385C;
+    color: white;
+  }
+</style>
+<body>
+  <header>
+    <div class="Logo">
+      <img class="logo" src="Airbnb-Logo.wine.png" alt="Logo">
+    </div>
+    <div class="second-part-header">
+      <button class="header-button" id="airbnb-your-home">Airbnb your home</button>
+      <button class="header-button" id="language-selector"><img class="logo" src="language.svg" alt=""></button>
+      <div class="login-box">
+        <button class="header-button" id="login"><img class="burger-menu" src="burger-menu.svg" alt=""></button>
+        <button class="header-button" id="signup">Sign up</button>
+      </div>
+    </div>
+  </header>
+  <div class="search-box">
+    <div class="two-choices">
+      <button class="header-button" id="places-to-stay">Stay</button>
+      <button class="header-button" id="experiences">Experiences</button>
+    </div>
+    <div class="search-bar">
+      <div class="search-type">
+        <label>Where?</label>
+        <input type="text" placeholder="Where are you going?">
+      </div>
+      <div class="search-type">
+        <label>Check In</label>
+        <input type="date" placeholder="Check in">
+      </div>
+      <div class="search-type">
+        <label>Check Out</label>
+        <input type="date" placeholder="Check out">
+      </div>
+      <div class="search-type">
+        <label>Who?</label>
+        <input type="number" placeholder="Guests">
+      </div>
+      <button id="search-button">Search</button>
+    </div>
+  </div>
+  <hr>
+  
+</body>
+</html>

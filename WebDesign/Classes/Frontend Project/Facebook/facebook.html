@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facebook</title>
+</head>
+<style>
+  body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+  }
+  .container{
+    display: flex;
+    max-width: 980px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .left-section{
+    width: 50%;
+  }
+  .left-section h1{
+    font-size: 3rem;
+    color: #1877f2;
+    margin-bottom: 10px;
+  }
+  .left-section p{
+    font-size: 1.5rem;
+    color: #4b4f56;
+  }
+  .right-section{
+    width: 40%;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .login-box{
+    display: flex;
+    flex-direction: column;
+  }
+  .login-box input{
+    margin: 10px 0;
+    border-radius: 5px;
+    padding: 12px;
+    border: 1px solid #dddfe2;
+    font-size: 16px;
+  }
+  .login-box button{
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .login-box button:hover{
+    background-color: #1465ce;
+  }
+  .login-box a{
+    text-decoration: none;
+    color: #1877f2;
+    margin: auto;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  .login-box hr{
+    margin: 20px 0;
+    border: none;
+    border-top: 2px solid #dddfe2;
+  }
+  .create-account{
+    background-color: #42b72a;
+    font-size: 16px;
+    padding: 10px;
+    color: white;
+    margin-top: 10px;
+    width: fit-content;
+    margin: auto;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .create-account:hover{
+    background-color: #379c23e9;
+  }
+</style>
+<body>
+  <div class="container">
+    <div class="left-section">
+      <h1>facebook</h1>
+      <p>Facebook helps you connect and share with the people in your life.</p>
+    </div>
+    <div class="right-section">
+      <div class="login-box">
+        <input type="text" placeholder="Email or Phone Number" id="email">
+        <input type="password" name="" id="password" placeholder="Password">
+        <button onclick="handleLogin()">Login</button>
+        <a href="#">Forgotten Password?</a>
+        <hr>
+        <div class="create-account">Create New Account</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function handleLogin(){
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      if(!email || !password){
+        alert('Please enter email and password');
+        return;
+      }
+      else{
+        alert(`Login attempt:  Email: ${email}, Password:  ${"*".repeat(
+          password.length
+        )}`
+        );
+        localStorage.setItem("FBemail", email);
+        window.location.href = "FBfeed.html";
+      }
+    }
+  </script>
+</body>
+</html>

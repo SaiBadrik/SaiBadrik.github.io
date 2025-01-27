@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facebook</title>
+</head>
+<style>
+  body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+  }
+  header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #1877f2;
+    color: #fff;
+  }
+  header .logo{
+    font-size: 24px;
+    font-weight: bold;
+  }
+  header .search-bar input{
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    width: 300px;
+  }
+  header .profile-menu{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  header .profile-menu img{
+    width: 50px;
+    height: 70px;
+    border-radius: 50%;
+  }
+  .main-content{
+    display: flex;
+    max-width: 1200px;
+    margin: 20px auto;
+    gap: 20px;
+  }
+  .sidebar{
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .sidebar ul{
+    list-style: none;
+    padding: 0;
+  }
+  .sidebar ul li{
+    padding: 10px 0;
+    border-bottom: 1px solid #dddfe2;
+    cursor: pointer;
+  }
+  .sidebar ul li:hover{
+    color: #1877f2;
+  }
+  .feed{
+    flex: 3;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .create-post{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .create-post input{
+    padding: 10px;
+    width: 80%;
+    border: 1px solid #dddfe2;
+    border-radius: 20px;
+  }
+  #postBtn{
+    padding: 10px 20px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  #postBtn:hover{
+    background-color: #1465ce;
+  }
+  .post{
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  .post-header{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .post-header img{
+    width: 50px;
+    height: 70px;
+    border-radius: 50%;
+  }
+  .post-content{
+    margin: 10px 0;
+  }
+  .post-actions button{
+    margin-right: 10px;
+    background-color: #f0f2f5;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .post-actions button:hover{
+    background-color: #ddd;
+  }
+</style>
+<body>
+  <header>
+    <div class="logo">facebook</div>
+    <div class="search-bar">
+      <input type="text" placeholder="Search Facebook...">
+    </div>
+    <div class="profile-menu">
+      <img src="profilepicture.jpg" alt="Profile Picture">
+      <span>Profile</span>
+    </div>
+  </header>
+    <div class="main-content">
+      <aside class="sidebar">
+        <ul>
+          <li>Home</li>
+          <li>Friends</li>
+          <li>Messages</li>
+          <li>Notifications</li>
+          <li>Settings</li>
+        </ul>
+      </aside>
+      <section class="feed">
+        <div class="create-post">
+          <input type="text" placeholder="What's on your mind?">
+          <button id="postBtn">Post</button>
+        </div>
+
+        <template id="post-template">
+            <div class="post-header">
+              <img src="{{profilePic}}" alt="User">
+              <span>{{Username}}</span>
+            </div>
+            <p class="post-content">
+              {{content}}
+            </p>
+            <div class="post-actions">
+              <button class="like">Like</button>
+              <button class="comment">Comment</button>
+              <button class="share">Share</button>
+        </template>
+      </section>
+    </div>
+</body>
+<script>
+    fetch('feed.json')
+    .then((res) => {
+      if(!res.ok){
+        throw new Error('Network response was not ok');
+      }
+    })
+    .then((data) => {
+      const posts = data;
+      console.log(posts);
+      return posts;
+    })
+    .catch((err) => console.log(err));
+  const temp = document.getElementById('post-template');
+  const feed = document.querySelector('.feed');
+  const posts = [
+    {
+      profilePic: 'profilepicture.jpg',
+      Username: 'Badrik',
+      content: 'I am the smartest one here!🧠🧠🧠🧠🧠'
+    },
+    {
+      profilePic: 'profilepicture.jpg',
+      Username: 'Lasya',
+      content: 'I am the most creative one here!🎨🎨🎨🎨🎨'
+    },
+    {
+      profilePic: 'profilepicture.jpg',
+      Username: 'Daddy',
+      content: 'I am the strongest one here!💪💪💪💪💪'
+    },
+    {
+      profilePic: 'profilepicture.jpg',
+      Username: 'Amma',
+      content: 'I am the best here!💀💀💀💀💀'
+    },
+  ];
+  posts.forEach((post) => {
+    const clone = temp.content.cloneNode(true);
+    clone.querySelector("img").src = post.profilePic;
+    clone.querySelector("span").textContent = post.Username;
+    clone.querySelector(".post-content").textContent = post.content;
+    clone.querySelector(".post-actions .like").id = `like${post.id}`;
+    feed.appendChild(clone);
+  });
+  document.getElementById('postBtn').addEventListener('click', () => {
+    const postContent = document.querySelector('.create-post input').value;
+    const clone = temp.content.cloneNode(true);
+    clone.querySelector("img").src = 'profilepicture.jpg';
+    clone.querySelector("span").textContent = 'Badrik';
+    clone.querySelector(".post-content").textContent = postContent;
+    feed.insertBefore(clone, feed.children[1]);
+  });
+</script>
+</html>
