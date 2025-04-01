@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager</title>
+</head>
+<style></style>
+<body>
+  <h2>Task Manager</h2>
+  <form action="/add" method="post">
+    <label for="title">Enter task:</label>
+    <input type="text" id="title" name="title" required />
+    <label for="description">Enter Description: </label>
+    <input type="text" id="description" name="description" required />
+    <input type="submit" value="Add Task" />
+  </form>
+
+  <h3>Tasks</h3>
+  {% if tasks|length == 0 %}
+    <p>No tasks found</p>
+  {% else %}
+    <ul>
+      {% for task in tasks %}
+        <li>
+          <h4>{{ task.title }}</h4>
+          <p>{{ task.description }}</p>
+          {% if task.status == "incomplete" %}
+          <button onclick = "toggleStatus('{{ task._id }}')" class="incomplete">
+            Incomplete
+          </button>
+          {% else %}
+          <button onclick = "toggleStatus('{{ task._id }}')" class="complete">
+            Complete
+          </button>
+          {% endif %}
+          <button onclick = "deleteTask('{{ task._id }}')">
+            Delete
+          </button>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</body>
+<script>
+  function toggleStatus(id){
+    fetch(`/update/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({status: 'complete'})
+    }).then((res) => res.json())
+    .then((data) => {
+      alert(data.message);
+      location.reload();
+    });
+  }
+  function deleteTask(id){
+    fetch(`/delete/${id}`, {
+      method: 'DELETE'
+    }).then((res) => res.json())
+    .then((data) => {
+      alert(data.message);
+      location.reload();
+    });
+  }
+</script>
+</html>

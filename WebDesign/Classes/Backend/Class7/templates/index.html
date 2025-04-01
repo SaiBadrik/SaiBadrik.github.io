@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student registration</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+    }
+    .container {
+      width: 50%;
+      margin: auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px black;
+    }
+    input {
+      display: block;
+      width: 90%;
+      margin: 10px auto;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px;
+      border: none;
+      background-color: rgb(13, 87, 36);
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: rgb(8, 58, 24);
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background-color: #eee;
+      padding: 10px;
+      margin: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <h1>Student registration</h1>
+
+      <form onsubmit="submitForm();">
+        <input id="name" type="text" name="name" placeholder="Name" required />
+        <input
+          id="email"
+          type="email"
+          name="email"
+          required
+        />
+        <button type="submit">Register</button>
+      </form>
+
+      <h2>Registered students</h2>
+      <ul id="student-list">
+        {% if error %}
+        <li>{{ error }}</li>
+        {% endif %} {% for student in students %}
+        <li>
+          {{ student.name }} - {{ student.email }}
+          <button onclick="deleteStudent('{{ student.id }}')">Delete</button>
+          <button onclick="updateStudent('{{ student.id }}')">Update</button>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <script>
+      async function deleteStudent(studentID) {
+        await fetch(`/students/${parseInt(studentID)}`, { method: "DELETE" })
+          .then((response) => response.json())
+          .then((data) => {
+            alert(data.message);
+            location.reload();
+          })
+          .catch((data) => {
+            alert(data.error);
+          });
+      }
+      async function updateStudent(id){
+        const name = prompt("Enter new name");
+        const email = prompt("Enter new email");
+        const data = {
+          name: name,
+          email: email,
+        };
+        await fetch(`/students/${parseInt(id)}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert(data.message);
+            location.reload();
+          })
+          .catch((error) => {
+            alert(data.error);
+          });
+      }
+      async function submitForm() {
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const data = {
+          name: name,
+          email: email,
+        };
+        await fetch("/students", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert(data.message);
+            location.reload();
+          })
+          .catch((error) => {
+            alert(data.error);
+          });
+      }
+    </script>
+  </body>
+</html>

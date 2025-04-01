@@ -34,3 +34,40 @@ def create_product():
   db.session.add(product)
   db.session.commit()
   return jsonify({"message": "Inserted new data"}, {"New data is: ": data}), 201
+
+@app.route("/products/<int:id>", methods=["GET"])
+def getProdById(id):
+  prod = Product.query.get(id)
+  if not prod:
+    return jsonify({"error": "Product not found"}), 404
+  else:
+    return jsonify({"id": prod.id, "name": prod.name, "price": prod.price, "quantity": prod.quantity})
+
+@app.route("/products/<int:id>", methods=["PUT"])
+def update_product(id):
+  product = Product.query.get(id)
+  if not product:
+    return jsonify({"error": "Product not found"}), 404
+  data = request.get_json()
+  if "name" in data:
+    product.name = data["name"]
+  if "price" in data:
+    product.price = data["price"]
+  if "quantity" in data:
+    product.quantity = data["quantity"]
+  db.session.commit()
+  return jsonify({"message": "Updated data", "New data": data}), 200
+
+@app.route("/products/<int:id>", methods=["DELETE"])
+def delete_product(id):
+  product = Product.query.get(id)
+  if not product:
+    return jsonify({"error": "Product not found"}), 404
+  db.session.delete(product)
+  db.session.commit()
+  return jsonify({"message": "Product deleted", "Product": product}), 204
+
+if __name__ == "__main__":
+  with app.app_context():
+      db.create_all()
+  app.run(debug=True)
