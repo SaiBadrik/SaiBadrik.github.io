@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Walkie-Talkie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        .pulse-animation {
+            animation: pulse 1.5s infinite;
+        }
+        .walkie-body {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+        }
+        .speaker-holes {
+            background-image: radial-gradient(circle, #334155 1px, transparent 1px);
+            background-size: 8px 8px;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-4">
+    <div class="walkie-body w-full max-w-md rounded-3xl shadow-2xl overflow-hidden border-2 border-cyan-500">
+        <!-- Header with antenna -->
+        <div class="bg-slate-800 p-4 relative">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-16 bg-gray-700 rounded-full">
+                <div class="absolute top-0 w-4 h-4 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full"></div>
+            </div>
+            <h1 class="text-cyan-400 text-center text-2xl font-mono mt-2">QUANTUM-LINK</h1>
+            <div class="flex justify-center mt-2">
+                <div id="status-indicator" class="h-3 w-16 bg-green-500 rounded-full pulse-animation"></div>
+            </div>
+        </div>
+
+        <!-- Speaker section -->
+        <div class="speaker-holes bg-slate-700 h-12"></div>
+
+        <!-- Display screen -->
+        <div class="bg-black p-2">
+            <div id="message-display" class="h-64 bg-black overflow-y-auto rounded-lg p-2 font-mono text-sm">
+                <div class="text-green-400">// SYSTEM INITIALIZED</div>
+                <div class="text-green-400">// QUANTUM-LINK READY</div>
+                <div class="text-green-400">// AWAITING TRANSMISSION...</div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="bg-slate-800 p-4">
+            <div class="flex gap-4 mb-4">
+                <input id="message-input" type="text" placeholder="Enter message..." 
+                    class="flex-1 bg-slate-700 text-cyan-300 rounded-lg p-2 border border-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 font-mono">
+                <button id="send-button" class="bg-red-600 hover:bg-red-700 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Control buttons -->
+            <div class="grid grid-cols-3 gap-2">
+                <button id="toggle-speech" class="bg-slate-700 hover:bg-slate-600 text-cyan-400 p-2 rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0-11V4" />
+                    </svg>
+                </button>
+                <button id="clear-messages" class="bg-slate-700 hover:bg-slate-600 text-cyan-400 p-2 rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                </button>
+                <button id="refresh-button" class="bg-slate-700 hover:bg-slate-600 text-cyan-400 p-2 rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottom LED display -->
+        <div class="bg-slate-900 p-2 flex justify-between">
+            <div class="flex space-x-2">
+                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+            </div>
+            <div id="time-display" class="text-cyan-400 font-mono text-xs">00:00:00</div>
+        </div>
+    </div>
+
+    <script>
+        // DOM elements
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        const messageDisplay = document.getElementById('message-display');
+        const toggleSpeechButton = document.getElementById('toggle-speech');
+        const clearMessagesButton = document.getElementById('clear-messages');
+        const refreshButton = document.getElementById('refresh-button');
+        const timeDisplay = document.getElementById('time-display');
+        const statusIndicator = document.getElementById('status-indicator');
+
+        // Speech synthesis
+        let speechEnabled = true;
+        const synth = window.speechSynthesis;
+
+        // Auto-fetch interval (in milliseconds)
+        let autoFetchInterval = null;
+        const FETCH_INTERVAL = 3000; // 3 seconds
+
+        // Update time display
+        function updateTime() {
+            const now = new Date();
+            timeDisplay.textContent = now.toLocaleTimeString('en-US', { hour12: false });
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Display a message
+        function displayMessage(message, timestamp) {
+            const messageElement = document.createElement('div');
+            messageElement.className = 'mb-2';
+            
+            const timeString = new Date(timestamp).toLocaleTimeString('en-US', { hour12: false });
+            messageElement.innerHTML = `
+                <span class="text-cyan-400">[${timeString}]</span>
+                <span class="text-green-300"> ${message}</span>
+            `;
+            
+            messageDisplay.appendChild(messageElement);
+            messageDisplay.scrollTop = messageDisplay.scrollHeight;
+            
+            // Text-to-speech if enabled
+            if (speechEnabled) {
+                const utterance = new SpeechSynthesisUtterance(message);
+                utterance.rate = 1.0;
+                synth.speak(utterance);
+            }
+        }
+
+        // System message
+        function displaySystemMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.className = 'mb-2 text-yellow-400';
+            messageElement.textContent = `// ${message}`;
+            messageDisplay.appendChild(messageElement);
+            messageDisplay.scrollTop = messageDisplay.scrollHeight;
+        }
+
+        // Send a message
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message) return;
+            
+            // Visual feedback
+            statusIndicator.classList.remove('bg-green-500');
+            statusIndicator.classList.add('bg-red-500');
+            
+            fetch('/send_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                messageInput.value = '';
+                displaySystemMessage('TRANSMISSION SENT');
+                fetchMessages(true);
+            })
+            .catch(error => {
+                displaySystemMessage('TRANSMISSION FAILED');
+                console.error('Error:', error);
+            })
+            .finally(() => {
+                statusIndicator.classList.remove('bg-red-500');
+                statusIndicator.classList.add('bg-green-500');
+            });
+        }
+
+        // Fetch messages
+        function fetchMessages(isSilent = false) {
+            fetch('/receive_message')
+                .then(response => response.json())
+                .then(data => {
+                    if (!isSilent) {
+                        // Clear existing messages first
+                        const systemMessages = Array.from(messageDisplay.querySelectorAll('.text-yellow-400, .text-green-400'));
+                        messageDisplay.innerHTML = '';
+                        systemMessages.forEach(msg => messageDisplay.appendChild(msg));
+                        
+                        // Display each message
+                        const messages = data.messages;
+                        if (messages.length > 0) {
+                            messages.forEach(msg => {
+                                displayMessage(msg.message, msg.timestamp);
+                            });
+                        } else {
+                            displaySystemMessage('NO NEW MESSAGES');
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching messages:', error);
+                    if (!isSilent) {
+                        displaySystemMessage('CONNECTION ERROR');
+                    }
+                });
+        }
+
+        // Toggle auto-fetch
+        function toggleAutoFetch() {
+            if (autoFetchInterval) {
+                clearInterval(autoFetchInterval);
+                autoFetchInterval = null;
+                displaySystemMessage('AUTO-RECEIVE DISABLED');
+                refreshButton.classList.remove('bg-cyan-600');
+                refreshButton.classList.add('bg-slate-700');
+            } else {
+                displaySystemMessage('AUTO-RECEIVE ENABLED');
+                refreshButton.classList.remove('bg-slate-700');
+                refreshButton.classList.add('bg-cyan-600');
+                autoFetchInterval = setInterval(() => {
+                    fetchMessages();
+                }, FETCH_INTERVAL);
+            }
+        }
+
+        // Event listeners
+        sendButton.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        toggleSpeechButton.addEventListener('click', () => {
+            speechEnabled = !speechEnabled;
+            if (speechEnabled) {
+                displaySystemMessage('VOICE OUTPUT ENABLED');
+                toggleSpeechButton.classList.add('bg-cyan-600');
+                toggleSpeechButton.classList.remove('bg-slate-700');
+            } else {
+                displaySystemMessage('VOICE OUTPUT DISABLED');
+                synth.cancel(); // Stop any current speech
+                toggleSpeechButton.classList.remove('bg-cyan-600');
+                toggleSpeechButton.classList.add('bg-slate-700');
+            }
+        });
+
+        clearMessagesButton.addEventListener('click', () => {
+            // Keep only system messages
+            const systemMessages = Array.from(messageDisplay.querySelectorAll('.text-yellow-400, .text-green-400'));
+            messageDisplay.innerHTML = '';
+            systemMessages.forEach(msg => messageDisplay.appendChild(msg));
+            displaySystemMessage('DISPLAY CLEARED');
+        });
+
+        refreshButton.addEventListener('click', () => {
+            toggleAutoFetch();
+        });
+
+        // Initial fetch and enable auto-fetch
+        fetchMessages();
+        toggleAutoFetch();
+    </script>
+</body>
+</html>
